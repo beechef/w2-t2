@@ -39,6 +39,7 @@ public class MoveableObjectController : MonoBehaviour
                 }
             }
             moveToPoint();
+            rotateToPoint();
         }
     }
     private void OnDrawGizmosSelected()
@@ -52,7 +53,11 @@ public class MoveableObjectController : MonoBehaviour
     void moveToPoint()
     {
         Vector3 direction = (pointController.Positions[CurrentPointIndex] - transform.position).normalized;
-        transform.Translate(direction * MoveSpeed * Time.deltaTime);
+        transform.Translate(direction * MoveSpeed * Time.deltaTime, Space.World);
+    }
+    void rotateToPoint()
+    {
+        transform.LookAt(pointController.Positions[CurrentPointIndex]);
     }
     void drawDirection()
     {
