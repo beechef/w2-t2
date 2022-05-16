@@ -46,5 +46,6 @@ public class PointController : MonoBehaviour
     {
         Gizmos.color = ObjectColor;
         Gizmos.DrawSphere(Positions[i], ObjectScale);
+        Gizmos.DrawIcon(Positions[i], "sv_icon_dot11_pix16_gizmo");
     }
 }
