@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class PointController : MonoBehaviour
 {
-    public GameObject pointPrefab;
+    //public GameObject pointPrefab;
     //public Point[] Points;
     public Vector3[] Positions;
 
-    public Color lineColor;
+    public Color LineColor;
+    public Color ObjectColor;
+
+    public float ObjectScale;
 
     void Start()
     {
@@ -24,13 +27,24 @@ public class PointController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = lineColor;
-        int nextLineIndex = 0;
         for (int i = 0; i < Positions.Length; i++)
         {
-            if (i + 1 >= Positions.Length) nextLineIndex = 0;
-            else nextLineIndex++;
-            Gizmos.DrawLine(Positions[i], Positions[nextLineIndex]);
+            drawConntectedLine(i);
+            drawPoint(i);
         }
+    }
+
+    private void drawConntectedLine(int i)
+    {
+        Gizmos.color = LineColor;
+        int nextLineIndex = 0;
+        if (i + 1 >= Positions.Length) nextLineIndex = 0;
+        else nextLineIndex = i + 1;
+        Gizmos.DrawLine(Positions[i], Positions[nextLineIndex]);
+    }
+    private void drawPoint(int i)
+    {
+        Gizmos.color = ObjectColor;
+        Gizmos.DrawSphere(Positions[i], ObjectScale);
     }
 }
