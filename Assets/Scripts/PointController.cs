@@ -32,16 +32,6 @@ public class PointController : MonoBehaviour
         Array.Fill(HotControls, -1);
     }
 
-    void Update()
-    {
-
-    }
-
-    private void OnGUI()
-    {
-      
-    }
-
     private void OnDrawGizmos()
     {
         sceneCamera = SceneView.currentDrawingSceneView.camera;
@@ -94,19 +84,19 @@ public class PointController : MonoBehaviour
         }
     }
 
-    //public void DeletePosition()
-    //{
-    //    Vector3[] tmp = new Vector3[Positions.Length - 1];
-    //    int count = 0;
-    //    for (int i = 0; i < Positions.Length; i++)
-    //    {
-    //        if (SelectedPointIndex == i) continue;
-    //        tmp[count++] = Positions[i];
-    //    }
-    //    Positions = tmp;
-    //}
+    public void DeletePosition()
+    {
+        Vector3[] tmp = new Vector3[Positions.Length - 1];
+        int count = 0;
+        for (int i = 0; i < Positions.Length; i++)
+        {
+            if (SelectedPointIndex == i) continue;
+            tmp[count++] = Positions[i];
+        }
+        Positions = tmp;
+    }
 
-  
+
     private void drawConntectedLine(int i)
     {
         Gizmos.color = LineColor;
@@ -137,16 +127,16 @@ public class MovePoint : Editor
     {  
         var p = target as PointController;
 
-        //p.SelectedPointIndex = getIndexHotControl();
+        p.SelectedPointIndex = getIndexHotControl();
 
-        //if (Event.current.isKey && Event.current.keyCode == KeyCode.D)
-        //{
-        //    if (p.SelectedPointIndex != -1)
-        //    {
-        //        p.DeletePosition();
-        //        GUIUtility.hotControl = -1;
-        //    }
-        //}
+        if (Event.current.isKey && Event.current.keyCode == KeyCode.D)
+        {
+            if (p.SelectedPointIndex != -1)
+            {
+                p.DeletePosition();
+                GUIUtility.hotControl = -1;
+            }
+        }
 
         for (int i = 0; i < p.Positions.Length; i++)
         {
@@ -165,13 +155,13 @@ public class MovePoint : Editor
             }
         }
     }
-    //private int getIndexHotControl()
-    //{
-    //    if (GUIUtility.hotControl - PointController.OFFSET_HOTCONTROL >= 0 && GUIUtility.hotControl - PointController.OFFSET_HOTCONTROL < ((PointController) target).Positions.Length)
-    //    {
-    //        return GUIUtility.hotControl - PointController.OFFSET_HOTCONTROL;
-    //    }
-    //    return -1;
-    //}
+    private int getIndexHotControl()
+    {
+        if (GUIUtility.hotControl - PointController.OFFSET_HOTCONTROL >= 0 && GUIUtility.hotControl - PointController.OFFSET_HOTCONTROL < ((PointController)target).Positions.Length)
+        {
+            return GUIUtility.hotControl - PointController.OFFSET_HOTCONTROL;
+        }
+        return -1;
+    }
 }
 
