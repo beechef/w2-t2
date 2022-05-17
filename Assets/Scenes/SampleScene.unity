@@ -445,13 +445,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6edd28ca5388444a8477f92ab97170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Positions:
-  - {x: 5, y: 5, z: 5}
-  - {x: 9.994679, y: 10.00899, z: 9.999831}
-  HotControls: fd3e0000053f0000000000000000000000000000
+  Positions: []
   LineColor: {r: 0.990566, g: 0.85426456, b: 0, a: 1}
   ObjectColor: {r: 0, g: 0, b: 0, a: 1}
   ObjectScale: 0.05
+  Diff: 1
+  DelayTime: 1
+  AddPoint: {x: 4.0420594, y: 5.632637, z: 0.037109617}
 --- !u!4 &1685442729
 Transform:
   m_ObjectHideFlags: 0

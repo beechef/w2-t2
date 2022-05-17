@@ -1,4 +1,3 @@
-using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,60 +8,72 @@ public class MoveableObjectController : MonoBehaviour
     private PointController pointController;
 
     public Color dirColor;
-    //private Point[] points;
-    //private Vector3[] PosPoints;
 
     public float MoveSpeed;
     public float Diff;
 
     public int CurrentPointIndex;
 
-    void Start()
-    {
-        //points = pointController.Points;
-    }
-
     void Update()
     {
-        if (isValidateIndex())
+        if (IsValidateIndex())
         {
             float distance = Vector3.Distance(pointController.Positions[CurrentPointIndex], transform.position);
             if (distance <= Diff)
             {
                 if (CurrentPointIndex + 1 >= pointController.Positions.Length)
                 {
-                    CurrentPointIndex = 0;
+                    if (pointController.Loop)
+                    {
+                        CurrentPointIndex = 0;
+                    }
                 }
                 else
                 {
                     CurrentPointIndex++;
+
                 }
             }
-            moveToPoint();
-            rotateToPoint();
+            MoveToPoint();
+            RotateToPoint();
+
+        }
+        else
+        {
+            CurrentPointIndex = pointController.Positions.Length - 1;
         }
     }
     private void OnDrawGizmosSelected()
     {
-        drawDirection();
+        DrawDirection();
     }
-    bool isValidateIndex()
+    bool IsValidateIndex()
     {
         return (CurrentPointIndex >= 0 && CurrentPointIndex < pointController.Positions.Length);
     }
-    void moveToPoint()
+    void MoveToPoint()
     {
         Vector3 direction = (pointController.Positions[CurrentPointIndex] - transform.position).normalized;
-        transform.Translate(direction * MoveSpeed * Time.deltaTime, Space.World);
+        direction *= MoveSpeed * Time.deltaTime;
+        float dirDistance = Vector3.Distance(Vector3.zero, direction);
+        float objDistance = Vector3.Distance(transform.position, pointController.Positions[CurrentPointIndex]);
+        if (dirDistance > objDistance)
+        {
+            transform.position = pointController.Positions[CurrentPointIndex];
+        }
+        else
+        {
+            transform.Translate(direction, Space.World);
+        }
     }
-    void rotateToPoint()
+    void RotateToPoint()
     {
         transform.LookAt(pointController.Positions[CurrentPointIndex]);
     }
-    void drawDirection()
+    void DrawDirection()
     {
         Gizmos.color = dirColor;
-        if (isValidateIndex())
+        if (IsValidateIndex())
         {
             Gizmos.DrawLine(transform.position, pointController.Positions[CurrentPointIndex]);
         }
