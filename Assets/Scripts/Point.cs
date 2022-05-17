@@ -5,7 +5,6 @@ namespace Assets.Scripts
     public class Point
     {
         public GameObject GOPoint { get; set; }
-        [SerializeField]
         public Vector3 Position { get; set; }
 
         public Point(GameObject GOPoint, Vector3 Position)
